@@ -9,8 +9,42 @@ import Badge from "@material-ui/core/Badge";
 // Styles
 import { Wrapper } from "./App.styles";
 
+// Types
+export type CartItemType = {
+    id: number;
+    category: string;
+    desc: string;
+    image: string;
+    price: number;
+    title: string;
+    amount: number;
+};
+
+const getProducts = async (): Promise<CartItemType> => {
+    return await (await fetch("https://fakestoreapi.com/products")).json();
+};
+console.log(getProducts);
+
 function App() {
+    const { data, isLoading, error } = useQuery<CartItemType[]>(
+        "products",
+        getProduct
+    );
     return <div className="App">ٍفشقف</div>;
 }
 
 export default App;
+
+/* Fetsh - async
+* My Way
+let data;
+const getProducts = async () => {
+    await fetch("https://fakestoreapi.com/products")
+        .then((res) => res.json())
+        .then((data) => data);
+};
+* His way
+const getProducts = async () => {
+    await (await fetch("https://fakestoreapi.com/products")).json();
+};
+ */
